@@ -117,7 +117,7 @@
   #acctMenu button{width:100%;text-align:left;border:none;background:none;color:var(--ink);font:inherit;font-size:12.5px;padding:9px 10px;border-radius:7px;cursor:pointer;}
   #acctMenu button:hover{background:var(--sel-fill);} #acctMenu .div{height:1px;background:var(--border);margin:4px 6px;}
 
-  #dock{position:fixed;left:18px;top:calc(50% - 78px);transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:8px;backdrop-filter:blur(10px);box-shadow:var(--shadow);}
+  #dock{position:fixed;left:18px;top:50%;transform:translateY(-50%);z-index:200;display:flex;flex-direction:column;gap:6px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:8px;backdrop-filter:blur(10px);box-shadow:var(--shadow);}
   .tool{width:42px;height:42px;border:none;background:none;border-radius:9px;cursor:pointer;color:var(--ink-soft);display:flex;align-items:center;justify-content:center;position:relative;}
   .tool:hover{background:var(--sel-fill);color:var(--ink);} .tool.on{background:var(--sel-fill);color:var(--ink);}
   .tool:disabled{opacity:.35;cursor:default;background:none;color:var(--ink-soft);}
@@ -136,9 +136,6 @@
   .lrow:hover{background:var(--sel-fill);} .lrow.sel{background:var(--sel-fill);box-shadow:inset 0 0 0 1px var(--accent);}
   .lrow.child{margin-left:18px;font-size:12px;color:var(--ink-soft);}
   .lrow .ic{width:14px;height:14px;flex:0 0 14px;color:var(--ink-soft);display:flex;}
-  .lrow .caret{flex:0 0 12px;width:12px;height:12px;color:var(--ink-soft);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s;}
-  .lrow .caret svg{width:9px;height:9px;} .lrow.collapsed .caret{transform:rotate(-90deg);}
-  .lrow .caret.spacer{cursor:default;opacity:0;}
   .lrow .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .lrow .eye{opacity:.45;cursor:pointer;flex:0 0 14px;} .lrow .eye:hover{opacity:1;} .lrow.off .nm{opacity:.4;}
   .lp-empty{padding:14px 12px;font-size:12px;line-height:1.6;color:var(--ink-soft);}
@@ -254,32 +251,6 @@
   #onboard .ob-go{margin-top:22px;width:100%;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font:inherit;font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:13px;border-radius:8px;cursor:pointer;}
   #onboard .ob-go:hover{background:var(--accent);border-color:var(--accent);}
 
-  #home{position:fixed;inset:0;z-index:260;background:var(--bg);display:none;flex-direction:column;overflow:auto;}
-  #home.open{display:flex;}
-  #home .home-top{display:flex;align-items:center;justify-content:space-between;padding:22px 40px;}
-  #home .home-top .wordmark{font-family:"Cormorant Garamond",serif;font-size:24px;letter-spacing:.2em;text-transform:uppercase;}
-  #home .home-actions{display:flex;align-items:center;gap:16px;}
-  #home .home-actions #homeLogout:hover{color:var(--ink);}
-  #home .home-inner{max-width:1040px;width:100%;margin:0 auto;padding:20px 40px 60px;}
-  #home .home-h{font-size:34px;margin:6px 0 26px;}
-  #home .home-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;}
-  .board-card{background:var(--paper);border:1px solid var(--border);border-radius:12px;overflow:hidden;cursor:pointer;box-shadow:var(--shadow);transition:border-color .15s,transform .15s;display:flex;flex-direction:column;text-align:left;padding:0;font:inherit;color:var(--ink);}
-  .board-card:hover{border-color:var(--accent);transform:translateY(-2px);}
-  .board-card .bc-thumb{height:118px;background:var(--paper-2);background-image:radial-gradient(var(--dot) 1px,transparent 1px);background-size:16px 16px;}
-  .board-card .bc-row{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;gap:8px;}
-  .board-card .bc-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:"Cormorant Garamond",serif;font-size:18px;}
-  .board-card .bc-menu{border:none;background:none;color:var(--ink-soft);cursor:pointer;font-size:16px;padding:0 6px;border-radius:6px;flex:0 0 auto;line-height:1;}
-  .board-card .bc-menu:hover{color:var(--ink);background:var(--sel-fill);}
-  .board-card.new{align-items:center;justify-content:center;background:none;border-style:dashed;min-height:170px;color:var(--ink-soft);}
-  .board-card.new:hover{color:var(--ink);transform:translateY(-2px);}
-  .board-card.new .bc-plus{font-size:30px;font-weight:300;line-height:1;}
-  .board-card.new .bc-name{font-family:inherit;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-top:8px;}
-  .home-loading{color:var(--ink-soft);padding:20px 2px;font-size:13px;}
-  #boardMenu{position:fixed;z-index:270;display:none;flex-direction:column;gap:2px;background:var(--panel);border:1px solid var(--border);border-radius:10px;backdrop-filter:blur(12px);box-shadow:var(--shadow);padding:5px;min-width:132px;}
-  #boardMenu.open{display:flex;}
-  #boardMenu button{border:none;background:none;color:var(--ink);font:inherit;font-size:12.5px;text-align:left;padding:8px 10px;border-radius:7px;cursor:pointer;}
-  #boardMenu button:hover{background:var(--sel-fill);} #boardMenu button[data-a="del"]:hover{color:#b4413a;}
-
   @media (max-width:760px){ #layers{width:230px;} #layers.collapsed{transform:translateX(230px);} #zc{right:248px;} #themeSeg{right:248px;} #lpTab{right:230px;} }
   @media (prefers-reduced-motion:reduce){ *{transition:none!important;} }
 </style>
@@ -308,13 +279,12 @@
 <div id="banner"><span class="msg"></span><span class="x" id="bannerX">✕</span></div>
 
 <div id="top">
-  <div class="wordmark" id="topWordmark" style="cursor:pointer" title="All boards">Enstring</div>
+  <div class="wordmark">Enstring</div>
   <div id="crumbs"></div>
   <div class="spacer"></div>
   <div id="acct">
     <button id="acctBtn" title="Account"><span class="av">·</span></button>
     <div id="acctMenu">
-      <button id="mHome">All boards</button>
       <button id="mSave">Save now</button>
       <button id="mExport">Export backup</button>
       <button id="mImport">Import backup</button>
@@ -360,11 +330,6 @@
 
 <div id="minimap"><div class="mm-head"><span>Map</span><span class="mm-btns"><button id="mmToggle" title="Expand">⤢</button><button id="mmCollapse" title="Hide">–</button></span></div><svg id="mmSvg"></svg></div>
 
-<div id="home"><div class="home-top"><div class="wordmark">Enstring</div><div class="home-actions"><span id="homeUser" class="label"></span><button id="homeLogout" class="label" style="cursor:pointer;background:none;border:none">Log out</button></div></div>
-  <div class="home-inner"><div class="home-h serif">Your boards</div><div id="homeGrid" class="home-grid"></div></div>
-</div>
-<div id="boardMenu"><button data-a="rename">Rename</button><button data-a="dup">Duplicate</button><button data-a="del">Delete</button></div>
-
 <div id="onboard"><div class="ob-card">
   <div class="ob-title serif">Welcome to Enstring</div>
   <ul class="ob-list">
@@ -403,6 +368,7 @@
   <div class="em">Enstring</div>
   <div class="sub" id="authSub">Log in to your boards</div>
   <button class="oauth" id="oauthGoogle">Continue with Google</button>
+  <button class="oauth" id="oauthGithub">Continue with GitHub</button>
   <div class="oauth-div">or use email</div>
   <input id="authName" class="field" placeholder="Your name" autocomplete="name" style="display:none">
   <input id="authEmail" class="field" type="email" placeholder="Email" autocomplete="email">
@@ -519,96 +485,59 @@ document.getElementById("authPass").addEventListener("keydown",e=>{if(e.key==="E
 document.getElementById("authEmail").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("authPass").focus();});
 
 function updateAccountChip(){document.querySelector("#acctBtn .av").textContent=(currentUser[0]||"?").toUpperCase();document.getElementById("acctBtn").title=currentUser;}
-function newBoardData(){
-  let u=1; const nid=p=>p+(u++);
-  const root=newBoard();
-  const f={id:nid("frame_"),type:"frame",x:-260,y:-150,w:470,h:300,hidden:false,flabel:"Concept"};
-  const t={id:nid("text_"),type:"text",x:-200,y:-70,w:200,h:88,hidden:false,body:"Central idea"};
-  const p={id:nid("page_"),type:"page",x:60,y:-75,w:222,h:140,hidden:false,title:"Reference",desc:"",child:null,no:1};
-  root.nodes.push(f,t,p);root.edges.push({id:nid("e_"),from:t.id,to:p.id,label:""});
-  return {boards:{root},stack:[{id:"root",name:"Board"}],pageCount:1,uid:u};
+function freshScene(name){
+  uid=1;pageCount=0;boards={root:newBoard()};stack=[{id:"root",name}];
+  const b=boards.root;
+  const f=mkNode("frame",-260,-150,{flabel:"Concept",w:470,h:300});
+  const t=mkNode("text",-200,-70,{body:"Central idea"});
+  const p=mkNode("page",60,-75,{title:"Reference"});
+  b.nodes.push(f,t,p);b.edges.push({id:id("e_"),from:t.id,to:p.id,label:""});
+  selectedNodes=new Set();selectedEdge=null;renderCrumbs();renderNodes();refreshHint();fitView();
 }
+function clearAppView(){boards={root:newBoard()};stack=[{id:"root",name:""}];pageCount=0;selectedNodes=new Set();selectedEdge=null;renderCrumbs();renderNodes();refreshHint();}
 
-/* ---- workspace storage: cloud = Supabase 'workspaces' table; else local ---- */
-function localIndex(){try{return JSON.parse(LS.get("enstring:index")||"[]");}catch(e){return[];}}
-function setLocalIndex(a){LS.set("enstring:index",JSON.stringify(a));}
-async function wsList(){
-  if(cloud&&authUser){const {data,error}=await supabase.from("workspaces").select("id,name,updated_at").eq("owner",authUser.id).order("updated_at",{ascending:false});if(error)throw error;return data||[];}
-  return localIndex().slice().sort((a,b)=>String(b.updated_at||"").localeCompare(String(a.updated_at||"")));
+async function enterApp(user){
+  authUser=user; hideAuth();
+  currentUser=(user.user_metadata&&user.user_metadata.name)||user.email.split("@")[0];
+  setStatus("Loading…"); let loaded=false;
+  try{
+    const {data,error}=await supabase.from("boards").select("data").eq("user_id",user.id).maybeSingle();
+    if(!error&&data&&data.data&&data.data.boards){restore(JSON.stringify(data.data));loaded=true;}
+  }catch(err){}
+  if(!loaded){freshScene(currentUser);await doSaveCloud();}
+  history=[snapshot()];hi=0;updateHistButtons();updateAccountChip();setStatus("Saved · "+timeNow());statusDot("ok");showOnboarding(false);
 }
-async function wsLoad(idv){
-  if(cloud&&authUser){const {data,error}=await supabase.from("workspaces").select("data,name").eq("id",idv).single();if(error)throw error;return {data:data.data,name:data.name};}
-  const raw=LS.get("enstring:board:"+idv),meta=localIndex().find(x=>x.id===idv);return {data:raw?JSON.parse(raw):newBoardData(),name:meta?meta.name:"Board"};
-}
-async function wsCreate(name,dataObj){
-  if(cloud&&authUser){const {data,error}=await supabase.from("workspaces").insert({owner:authUser.id,name,data:dataObj}).select("id").single();if(error)throw error;return data.id;}
-  const idv="b_"+Date.now()+"_"+Math.floor(Math.random()*9999),arr=localIndex();arr.push({id:idv,name,updated_at:new Date().toISOString()});setLocalIndex(arr);LS.set("enstring:board:"+idv,JSON.stringify(dataObj));return idv;
-}
-async function wsUpdate(idv,dataObj){
-  if(cloud&&authUser){const {error}=await supabase.from("workspaces").update({data:dataObj,updated_at:new Date().toISOString()}).eq("id",idv);if(error)throw error;return;}
-  LS.set("enstring:board:"+idv,JSON.stringify(dataObj));const arr=localIndex(),m=arr.find(x=>x.id===idv);if(m)m.updated_at=new Date().toISOString();setLocalIndex(arr);
-}
-async function wsRename(idv,name){
-  if(cloud&&authUser){const {error}=await supabase.from("workspaces").update({name}).eq("id",idv);if(error)throw error;return;}
-  const arr=localIndex(),m=arr.find(x=>x.id===idv);if(m)m.name=name;setLocalIndex(arr);
-}
-async function wsDuplicate(idv){const {data,name}=await wsLoad(idv);return wsCreate((name||"Board")+" copy",data);}
-async function wsDelete(idv){
-  if(cloud&&authUser){const {error}=await supabase.from("workspaces").delete().eq("id",idv);if(error)throw error;return;}
-  LS.remove("enstring:board:"+idv);setLocalIndex(localIndex().filter(x=>x.id!==idv));
-}
-
-/* ---- open board / home screen ---- */
-let currentWs=null, currentWsName="Board";
-function clearAppView(){currentWs=null;boards={root:newBoard()};stack=[{id:"root",name:""}];pageCount=0;selectedNodes=new Set();selectedEdge=null;renderCrumbs();renderNodes();refreshHint();document.getElementById("home").classList.remove("open");}
-async function openWorkspace(idv){
-  setStatus("Loading…");statusDot("wait");
-  let res;try{res=await wsLoad(idv);}catch(e){setStatus("Load failed");statusDot("off");return;}
-  currentWs=idv;currentWsName=res.name||"Board";
-  const d=res.data&&res.data.boards?res.data:newBoardData();
-  restore(JSON.stringify(d));
-  if(stack&&stack[0]){stack[0].name=currentWsName;renderCrumbs();}
-  fitView();history=[snapshot()];hi=0;updateHistButtons();
-  document.getElementById("home").classList.remove("open");
-  setStatus("Saved · "+timeNow());statusDot("ok");showOnboarding(false);
-}
-async function createAndOpen(){setStatus("Creating…");statusDot("wait");try{const idv=await wsCreate("Untitled board",newBoardData());await openWorkspace(idv);}catch(e){setStatus("Create failed");statusDot("off");}}
-async function goHome(){if(currentWs){try{await saveCurrent();}catch(e){}}currentWs=null;document.getElementById("home").classList.add("open");await renderHome();}
-async function renderHome(){
-  document.getElementById("homeUser").textContent=currentUser;
-  const grid=document.getElementById("homeGrid");grid.innerHTML='<div class="home-loading">Loading…</div>';
-  let list;try{list=await wsList();}catch(e){grid.innerHTML='<div class="home-loading">Could not load your boards.</div>';return;}
-  grid.innerHTML="";
-  const nb=document.createElement("button");nb.className="board-card new";nb.innerHTML='<div class="bc-plus">＋</div><div class="bc-name">New board</div>';nb.addEventListener("click",createAndOpen);grid.appendChild(nb);
-  list.forEach(w=>{const c=document.createElement("div");c.className="board-card";c.innerHTML='<div class="bc-thumb"></div><div class="bc-row"><span class="bc-name"></span><button class="bc-menu">⋯</button></div>';c.querySelector(".bc-name").textContent=w.name||"Untitled";c.addEventListener("click",e=>{if(e.target.closest(".bc-menu"))return;openWorkspace(w.id);});c.querySelector(".bc-menu").addEventListener("click",e=>{e.stopPropagation();openBoardMenu(w,e.currentTarget);});grid.appendChild(c);});
-}
-let menuTarget=null;
-function openBoardMenu(w,btn){menuTarget=w;const m=document.getElementById("boardMenu");const r=btn.getBoundingClientRect();m.style.left=Math.min(r.left,window.innerWidth-150)+"px";m.style.top=(r.bottom+4)+"px";m.classList.add("open");}
-
-async function routeAfterLogin(){
-  setStatus("Loading…");statusDot("wait");
-  let list;try{list=await wsList();}catch(e){list=[];}
-  if(!list.length){try{const idv=await wsCreate("My board",newBoardData());await openWorkspace(idv);}catch(e){setStatus("Error loading");statusDot("off");}}
-  else if(list.length===1){await openWorkspace(list[0].id);}
-  else{await goHome();}
-}
-async function enterApp(user){authUser=user;hideAuth();currentUser=(user.user_metadata&&user.user_metadata.name)||user.email.split("@")[0];updateAccountChip();await routeAfterLogin();}
-
 function statusDot(s){const el=document.getElementById("status");el.classList.remove("ok","wait","off");el.classList.add(s);}
 let pendingSave=false, retryT=null;
-async function saveCurrent(){
-  if(!currentWs){statusDot("ok");return;}
+async function doSaveCloud(){
+  if(!authUser||!supabase)return;
   statusDot("wait");setStatus("Saving…");
-  try{await wsUpdate(currentWs,JSON.parse(snapshot()));pendingSave=false;statusDot("ok");setStatus((cloud&&authUser)||storageWorks?("Saved · "+timeNow()):"Preview · not stored");}
-  catch(err){pendingSave=true;statusDot("off");setStatus("Offline — will save when reconnected");clearTimeout(retryT);retryT=setTimeout(()=>{if(pendingSave)saveCurrent();},5000);}
+  try{
+    const {error}=await supabase.from("boards").upsert({user_id:authUser.id,data:JSON.parse(snapshot()),updated_at:new Date().toISOString()},{onConflict:"user_id"});
+    if(error)throw error;
+    pendingSave=false;statusDot("ok");setStatus("Saved · "+timeNow());
+  }catch(err){
+    pendingSave=true;statusDot("off");setStatus("Offline — will save when reconnected");
+    clearTimeout(retryT);retryT=setTimeout(()=>{if(pendingSave)doSaveCloud();},5000);
+  }
 }
-window.addEventListener("online",()=>{if(pendingSave)saveCurrent();});
-function doSave(){saveCurrent();}
+window.addEventListener("online",()=>{if(pendingSave&&authUser)doSaveCloud();});
+function doSaveLocal(){LS.set("enstring:user:"+currentUser,snapshot());LS.set("enstring:session",currentUser);statusDot("ok");setStatus(storageWorks?("Saved · "+timeNow()):"Preview · not stored");}
+function doSave(){ if(cloud&&authUser)doSaveCloud(); else doSaveLocal(); }
 let saveT=null;
 function autosave(){statusDot("wait");setStatus("Saving…");clearTimeout(saveT);saveT=setTimeout(doSave,600);}
 function saveNow(){clearTimeout(saveT);doSave();}
 
-function startLocal(){currentUser=LS.get("enstring:session")||"Jasmine";LS.set("enstring:session",currentUser);updateAccountChip();document.getElementById("mSwitch").style.display="none";routeAfterLogin();}
+function startLocal(){
+  const session=LS.get("enstring:session"); currentUser=session||"Jasmine";
+  const raw=LS.get("enstring:user:"+currentUser);
+  if(raw){restoring=true;restore(raw);restoring=false;}else{freshScene(currentUser);}
+  LS.set("enstring:session",currentUser);
+  history=[snapshot()];hi=0;updateHistButtons();updateAccountChip();
+  setStatus(storageWorks?"Saved":"Preview · not stored");statusDot("ok");
+  document.getElementById("mSwitch").style.display="none";
+  showOnboarding(false);
+}
 
 /* ---- view ---- */
 function applyView(){const v=view();world.style.transform=`translate(${v.tx}px,${v.ty}px) scale(${v.s})`;grid.style.backgroundSize=`${28*v.s}px ${28*v.s}px`;grid.style.backgroundPosition=`${v.tx}px ${v.ty}px`;document.getElementById("zPct").textContent=Math.round(v.s*100)+"%";renderEdges();updateMinimap();if(editingNode){const el=world.querySelector('.node[data-id="'+editingNode.id+'"]');if(el)positionFmtbar(el);}}
@@ -915,9 +844,8 @@ const EYE='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="c
 const EYEOFF='<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3l18 18M10.6 10.7a2.6 2.6 0 003.7 3.6M9.4 5.2A9.9 9.9 0 0112 5c6.5 0 10 7 10 7a17 17 0 01-3 3.7M6.3 6.4A17 17 0 002 12s3.5 7 10 7a9.7 9.7 0 004.1-.9"/></svg>';
 function plainText(html){const d=document.createElement("div");d.innerHTML=html||"";return (d.textContent||"").trim();}
 function nameOf(n){return n.type==="text"?(plainText(n.body)||"Note"):n.type==="page"?(n.title||"Page"):n.type==="image"?"Image":n.type==="table"?"Table":n.type==="checklist"?((n.items&&n.items[0]&&n.items[0].text)||"Checklist"):n.type==="embed"?(embedHost(n)||"Embed"):(n.flabel||"Group");}
-const collapsedFrames=new Set();
-function row(n,isChild,isFrame){const r=document.createElement("div");r.className="lrow"+(isChild?" child":"")+(selectedNodes.has(n.id)?" sel":"")+(n.hidden?" off":"")+(isFrame&&collapsedFrames.has(n.id)?" collapsed":"");const caret=isFrame?'<span class="caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg></span>':'<span class="caret spacer"></span>';r.innerHTML=caret+`<span class="ic">${ICONS[n.type]}</span><span class="nm"></span><span class="eye">${n.hidden?EYEOFF:EYE}</span>`;r.querySelector(".nm").textContent=nameOf(n);if(isFrame)r.querySelector(".caret").addEventListener("click",e=>{e.stopPropagation();if(collapsedFrames.has(n.id))collapsedFrames.delete(n.id);else collapsedFrames.add(n.id);renderLayers();});r.addEventListener("click",e=>{if(e.target.closest(".eye")||e.target.closest(".caret"))return;selectOnly(n.id);const t=nodeById(n.id);if(t)centerOn(t);});r.querySelector(".eye").addEventListener("click",e=>{e.stopPropagation();n.hidden=!n.hidden;renderNodes();commit();});return r;}
-function renderLayers(){const body=document.getElementById("lpBody");body.innerHTML="";const ns=board().nodes;if(!ns.length){body.innerHTML='<div class="lp-empty">Nothing here yet. Add a note, page, image, or a frame to group things — items dropped inside a frame nest beneath it here.</div>';return;}const frames=ns.filter(n=>n.type==="frame"),claimed=new Set();frames.forEach(f=>{const g=document.createElement("div");g.appendChild(row(f,false,true));const kids=childrenOf(f);kids.forEach(c=>claimed.add(c.id));if(!collapsedFrames.has(f.id))kids.forEach(c=>g.appendChild(row(c,true,false)));body.appendChild(g);});ns.filter(n=>n.type!=="frame"&&!claimed.has(n.id)).forEach(n=>body.appendChild(row(n,false,false)));}
+function row(n,isChild){const r=document.createElement("div");r.className="lrow"+(isChild?" child":"")+(selectedNodes.has(n.id)?" sel":"")+(n.hidden?" off":"");r.innerHTML=`<span class="ic">${ICONS[n.type]}</span><span class="nm"></span><span class="eye">${n.hidden?EYEOFF:EYE}</span>`;r.querySelector(".nm").textContent=nameOf(n);r.addEventListener("click",e=>{if(e.target.closest(".eye"))return;selectOnly(n.id);const t=nodeById(n.id);if(t)centerOn(t);});r.querySelector(".eye").addEventListener("click",e=>{e.stopPropagation();n.hidden=!n.hidden;renderNodes();commit();});return r;}
+function renderLayers(){const body=document.getElementById("lpBody");body.innerHTML="";const ns=board().nodes;if(!ns.length){body.innerHTML='<div class="lp-empty">Nothing here yet. Add a note, page, image, or a frame to group things — items dropped inside a frame nest beneath it here.</div>';return;}const frames=ns.filter(n=>n.type==="frame"),claimed=new Set();frames.forEach(f=>{const g=document.createElement("div");g.appendChild(row(f,false));childrenOf(f).forEach(c=>{claimed.add(c.id);g.appendChild(row(c,true));});body.appendChild(g);});ns.filter(n=>n.type!=="frame"&&!claimed.has(n.id)).forEach(n=>body.appendChild(row(n,false)));}
 
 /* ---- misc + wiring ---- */
 function refreshHint(){hint.classList.toggle("gone",board().nodes.length>0);}
@@ -962,19 +890,9 @@ document.getElementById("obGo").addEventListener("click",closeOnboarding);
 document.getElementById("helpBtn").addEventListener("click",()=>showOnboarding(true));
 
 /* oauth */
-async function oauthLogin(provider){if(!supabase){authError("Sign-in isn't configured yet.");return;}try{const {error}=await supabase.auth.signInWithOAuth({provider,options:{redirectTo:window.location.origin+window.location.pathname}});if(error)authError(error.message);}catch(e){authError("Could not start sign-in.");}}
+async function oauthLogin(provider){if(!supabase){authError("Sign-in isn't configured yet.");return;}try{const {error}=await supabase.auth.signInWithOAuth({provider,options:{redirectTo:window.location.href.split("#")[0]}});if(error)authError(error.message);}catch(e){authError("Could not start sign-in.");}}
 document.getElementById("oauthGoogle").addEventListener("click",()=>oauthLogin("google"));
-
-/* home / board management wiring */
-document.getElementById("topWordmark").addEventListener("click",goHome);
-document.getElementById("mHome").addEventListener("click",goHome);
-document.getElementById("homeLogout").addEventListener("click",async()=>{if(cloud&&supabase){await supabase.auth.signOut();}});
-document.getElementById("boardMenu").addEventListener("click",async e=>{const b=e.target.closest("button");if(!b||!menuTarget)return;const a=b.dataset.a,w=menuTarget;document.getElementById("boardMenu").classList.remove("open");
-  if(a==="rename"){const nn=prompt("Rename board:",w.name||"");if(nn&&nn.trim()){await wsRename(w.id,nn.trim());renderHome();}}
-  else if(a==="dup"){await wsDuplicate(w.id);renderHome();}
-  else if(a==="del"){if(confirm('Delete "'+(w.name||"Untitled")+'"? This cannot be undone.')){await wsDelete(w.id);renderHome();}}
-});
-document.addEventListener("click",()=>document.getElementById("boardMenu").classList.remove("open"));
+document.getElementById("oauthGithub").addEventListener("click",()=>oauthLogin("github"));
 const acctMenu=document.getElementById("acctMenu");
 document.getElementById("acctBtn").addEventListener("click",e=>{e.stopPropagation();acctMenu.classList.toggle("open");});
 document.addEventListener("click",()=>acctMenu.classList.remove("open"));
@@ -988,7 +906,6 @@ window.addEventListener("resize",renderEdges);
 
 /* ---- boot ---- */
 async function boot(){
-  if(location.search.indexOf("error")>-1){try{history.replaceState(null,"",location.origin+location.pathname);}catch(e){}}
   const r=vpRect();view().tx=r.width/2;view().ty=r.height/2;
   const th=LS.get("enstring:theme");if(th){document.documentElement.dataset.theme=th;document.querySelectorAll("#themeSeg button").forEach(x=>x.classList.toggle("on",x.dataset.t===th));}
   if(cloud){
