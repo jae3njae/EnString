@@ -193,6 +193,8 @@
   #modal .field{width:100%;border:none;border-bottom:1px solid var(--border);background:none;color:var(--ink);font:inherit;font-size:14px;padding:10px 2px;outline:none;margin-top:10px;text-align:left;}
   #modal .field:focus{border-color:var(--accent);}
   #modal .err{min-height:15px;margin-top:12px;font-size:11px;color:#b4413a;letter-spacing:.02em;line-height:1.4;}
+  #modal .pass-hint{display:none;margin-top:8px;font-size:10.5px;line-height:1.5;color:var(--ink-soft);text-align:left;}
+  #modal .pass-hint.show{display:block;}
   #modal .hcap{margin-top:16px;display:flex;justify-content:center;min-height:0;}
   #modal .hcap:empty{margin-top:0;}
   #modal .go{margin-top:8px;width:100%;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font:inherit;font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:13px;border-radius:8px;cursor:pointer;}
@@ -431,6 +433,7 @@
   <input id="authName" class="field" placeholder="Your name" autocomplete="name" style="display:none">
   <input id="authEmail" class="field" type="email" placeholder="Email" autocomplete="email">
   <input id="authPass" class="field" type="password" placeholder="Password" autocomplete="current-password">
+  <div id="passHint" class="pass-hint">At least 8 characters, with an uppercase letter, a lowercase letter, and a number.</div>
   <div id="hcap" class="hcap"></div>
   <div class="err" id="authErr"></div>
   <button class="go" id="authGo">Log in</button>
@@ -512,17 +515,30 @@ let supabase=null, authUser=null, authMode="login";
 
 function banner(html){const b=document.getElementById("banner");b.querySelector(".msg").innerHTML=html;b.classList.add("show");}
 document.getElementById("bannerX").addEventListener("click",()=>document.getElementById("banner").classList.remove("show"));
-function authError(m){document.getElementById("authErr").textContent=m||"";}
+function prettyAuthError(m){
+  const s=String(m||"");
+  if(/Password should/i.test(s))return "Password must be at least 8 characters and include a lowercase letter, an uppercase letter, and a number.";
+  if(/already registered|already exists/i.test(s))return "An account with that email already exists. Try logging in instead.";
+  if(/Invalid login credentials/i.test(s))return "That email or password isn't right.";
+  if(/Email not confirmed/i.test(s))return "Check your inbox and confirm your email, then log in.";
+  if(/captcha/i.test(s))return "Please complete the captcha below.";
+  if(/rate limit|too many/i.test(s))return "Too many attempts. Please wait a moment and try again.";
+  return s;
+}
+function authError(m){document.getElementById("authErr").textContent=m?prettyAuthError(m):"";}
 function showAuth(){document.getElementById("modal").classList.add("open");authError("");}
 function hideAuth(){document.getElementById("modal").classList.remove("open");}
 function setAuthMode(m){
   authMode=m; const name=document.getElementById("authName");
-  if(m==="signup"){name.style.display="";document.getElementById("authSub").textContent="Create your account";document.getElementById("authGo").textContent="Create account";document.getElementById("authToggle").textContent="Have an account? Log in";document.getElementById("authPass").setAttribute("autocomplete","new-password");}
-  else{name.style.display="none";document.getElementById("authSub").textContent="Log in to your boards";document.getElementById("authGo").textContent="Log in";document.getElementById("authToggle").textContent="New here? Create an account";document.getElementById("authPass").setAttribute("autocomplete","current-password");}
+  if(m==="signup"){name.style.display="";document.getElementById("passHint").classList.add("show");document.getElementById("authSub").textContent="Create your account";document.getElementById("authGo").textContent="Create account";document.getElementById("authToggle").textContent="Have an account? Log in";document.getElementById("authPass").setAttribute("autocomplete","new-password");}
+  else{name.style.display="none";document.getElementById("passHint").classList.remove("show");document.getElementById("authSub").textContent="Log in to your boards";document.getElementById("authGo").textContent="Log in";document.getElementById("authToggle").textContent="New here? Create an account";document.getElementById("authPass").setAttribute("autocomplete","current-password");}
   authError("");
 }
 document.getElementById("authToggle").addEventListener("click",()=>setAuthMode(authMode==="login"?"signup":"login"));
-const CAPTCHA_SITEKEY="e2d45d50-aa3e-435c-8e12-96764394dbe6";
+// hCaptcha: leave this EMPTY to turn the captcha off.
+// To turn it back on: paste your site key here AND enable CAPTCHA in
+// Supabase → Authentication → Attack Protection. Both must match.
+const CAPTCHA_SITEKEY="";  // "e2d45d50-aa3e-435c-8e12-96764394dbe6"
 let hcapId=null;
 function loadCaptcha(){
   if(!CAPTCHA_SITEKEY||!cloud)return;
