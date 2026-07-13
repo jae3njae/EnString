@@ -193,6 +193,8 @@
   #modal .field{width:100%;border:none;border-bottom:1px solid var(--border);background:none;color:var(--ink);font:inherit;font-size:14px;padding:10px 2px;outline:none;margin-top:10px;text-align:left;}
   #modal .field:focus{border-color:var(--accent);}
   #modal .err{min-height:15px;margin-top:12px;font-size:11px;color:#b4413a;letter-spacing:.02em;line-height:1.4;}
+  #modal .hcap{margin-top:16px;display:flex;justify-content:center;min-height:0;}
+  #modal .hcap:empty{margin-top:0;}
   #modal .go{margin-top:8px;width:100%;border:1px solid var(--ink);background:var(--ink);color:var(--paper);font:inherit;font-size:11px;letter-spacing:.18em;text-transform:uppercase;padding:13px;border-radius:8px;cursor:pointer;}
   #modal .go:hover{background:var(--accent);border-color:var(--accent);} #modal .go:disabled{opacity:.5;cursor:default;}
   #modal .toggle{margin-top:16px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;}
@@ -429,6 +431,7 @@
   <input id="authName" class="field" placeholder="Your name" autocomplete="name" style="display:none">
   <input id="authEmail" class="field" type="email" placeholder="Email" autocomplete="email">
   <input id="authPass" class="field" type="password" placeholder="Password" autocomplete="current-password">
+  <div id="hcap" class="hcap"></div>
   <div class="err" id="authErr"></div>
   <button class="go" id="authGo">Log in</button>
   <div class="toggle" id="authToggle">New here? Create an account</div>
@@ -519,22 +522,38 @@ function setAuthMode(m){
   authError("");
 }
 document.getElementById("authToggle").addEventListener("click",()=>setAuthMode(authMode==="login"?"signup":"login"));
+const CAPTCHA_SITEKEY="e2d45d50-aa3e-435c-8e12-96764394dbe6";
+let hcapId=null;
+function loadCaptcha(){
+  if(!CAPTCHA_SITEKEY||!cloud)return;
+  window.onHcapLoad=()=>{try{hcapId=hcaptcha.render("hcap",{sitekey:CAPTCHA_SITEKEY,theme:"light"});}catch(e){}};
+  const s=document.createElement("script");
+  s.src="https://js.hcaptcha.com/1/api.js?onload=onHcapLoad&render=explicit";
+  s.async=true;s.defer=true;document.head.appendChild(s);
+}
+function captchaToken(){try{return hcapId!==null?hcaptcha.getResponse(hcapId):null;}catch(e){return null;}}
+function captchaReset(){try{if(hcapId!==null)hcaptcha.reset(hcapId);}catch(e){}}
+
 async function doAuth(){
   if(!supabase)return;
   const email=document.getElementById("authEmail").value.trim(), pass=document.getElementById("authPass").value;
   if(!email||!pass){authError("Enter your email and password.");return;}
+  const tok=captchaToken();
+  if(hcapId!==null&&!tok){authError("Please complete the captcha below.");return;}
   authError(""); const go=document.getElementById("authGo"); go.disabled=true;
+  const opts=tok?{captchaToken:tok}:{};
   try{
     if(authMode==="signup"){
       const name=document.getElementById("authName").value.trim()||email.split("@")[0];
-      const {data,error}=await supabase.auth.signUp({email,password:pass,options:{data:{name}}});
+      const {data,error}=await supabase.auth.signUp({email,password:pass,options:Object.assign({data:{name}},opts)});
       if(error)authError(error.message);
       else if(!data.session){authError("Account created — check your email to confirm, then log in.");setAuthMode("login");}
     }else{
-      const {error}=await supabase.auth.signInWithPassword({email,password:pass});
+      const {error}=await supabase.auth.signInWithPassword({email,password:pass,options:opts});
       if(error)authError(error.message);
     }
   }catch(err){authError("Something went wrong. Check your connection.");}
+  captchaReset();
   go.disabled=false;
 }
 document.getElementById("authGo").addEventListener("click",doAuth);
@@ -1222,7 +1241,7 @@ async function boot(){
       const m=await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm");
       supabase=m.createClient(cfg.url,cfg.anonKey);
       document.getElementById("mSwitch").textContent="Log out";
-      setAuthMode("login");showAuth();
+      setAuthMode("login");showAuth();loadCaptcha();
       supabase.auth.onAuthStateChange((event,session)=>{if(session&&session.user){if(!authUser)enterApp(session.user);}else{authUser=null;clearAppView();showAuth();}});
     }catch(err){console.error(err);banner('Couldn\u2019t load Supabase. Check your connection and that you opened this through a local server (not a <b>file://</b> path).');startLocal();}
   }else{
